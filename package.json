@@ -14,5 +14,8 @@
     "server-production": "cd src/server && npm run production",
     "test": "npm run test-server",
     "test-server": "cd src/server && npm test"
+  },
+  "devDependencies": {
+    "husky": "^1.2.1"
   }
 }
