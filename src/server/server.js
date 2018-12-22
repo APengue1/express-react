@@ -7,16 +7,23 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const app = express();
+const server = express();
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+server.use(logger('dev'));
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
+server.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, '/../client/build')));
-app.get('*', (req, res) => {
+server.use(express.static(path.join(__dirname, '/../client/build')));
+server.get('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../client/build/index.html`));
 });
 
-module.exports = app;
+server.run = (cb) => {
+  const port = process.env.PORT || '3000';
+  server.listen(port, (err) => {
+    return cb ? cb(err ? err : null, port) : null;
+  });
+};
+
+module.exports = server;
