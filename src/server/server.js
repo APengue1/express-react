@@ -9,7 +9,10 @@ const logger = require('morgan');
 
 const server = express();
 
-server.use(logger('dev'));
+if (process.env.NODE_ENV !== 'test') {
+  server.use(logger('dev'));
+}
+
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(cookieParser());
